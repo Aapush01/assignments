@@ -16,6 +16,56 @@
   Once you've implemented the logic, test your code by running
 */
 
-class Calculator {}
+class Calculator {
+  constructor() {
+    this.result;
+  }
+  add(num) {
+    this.result = (this.result || 0) + num;
+  }
+  subtract(num) {
+    this.result = (this.result || 0) - num;
+  }
+  multiply(num) {
+    this.result = (this.result || 1) * num;
+  }
+  divide(num) {
+    if (num === 0 || num === Infinity || num === -Infinity) {
+      throw new Error(`Cannot divide by this ${num}`);
+    }
+    this.result = (this.result || 1) / num;
+  }
+  clear() {
+    this.result = 0;
+  }
+  getResult() {
+    return this.result;
+  }
+  calculate(string) {
+    string = string.replace(/\s+/g, '');
+
+    const containAlphabets = string.match(/[a-z,A-Z]/);
+
+    if (containAlphabets) {
+      throw new Error('Expression contain non number');
+    }
+
+    if (string.includes('/0')) {
+      throw new Error('Invalid expression: Division by zero');
+    }
+
+    try {
+      this.result = eval(string);
+
+      // Check if the result is a finite number
+      if (!isFinite(this.result)) {
+        throw new Error('Invalid expression: Result is not a finite number');
+      }
+    } catch (error) {
+      throw new Error('Invalid expression: Unable to evaluate');
+    }
+  }
+
+}
 
 module.exports = Calculator;
