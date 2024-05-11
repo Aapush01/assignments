@@ -29,6 +29,7 @@ export function Assignment2() {
 
 function Alert({showAlert}) { 
     return <button onClick={showAlert}>Show Alert</button>
+    
 }
 
  
